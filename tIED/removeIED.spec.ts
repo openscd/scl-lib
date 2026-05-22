@@ -5,10 +5,7 @@ import { isRemove, isUpdate } from "@openscd/oscd-api/utils.js";
 
 import { handleEdit } from "../foundation/helpers.test.js";
 
-import {
-  scl,
-  sclDuplicateLNodes,
-} from "./removeIED.testfile.js";
+import { scl, sclDuplicateLNodes } from "./removeIED.testfile.js";
 
 import { removeIED } from "./removeIED.js";
 

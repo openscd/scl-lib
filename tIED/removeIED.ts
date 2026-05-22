@@ -52,8 +52,8 @@ function removeIedSubscriptionsAndSupervisions(
 
 function lNodeKey(element: Element): string {
   const attr = (name: string) => element.getAttribute(name) ?? "";
-  return `${attr("lnInst")}|${attr("lnClass")}|${attr("ldInst")}|${attr(
-    "prefix",
+  return `${attr("lnInst")}|$${attr("prefix")}|{attr("lnClass")}|${attr(
+    "ldInst",
   )}`;
 }
 
