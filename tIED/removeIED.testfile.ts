@@ -575,3 +575,65 @@ export const scl = `<SCL xmlns="http://www.iec.ch/61850/2003/SCL" xmlns:esld="ht
   </EnumType>
 </DataTypeTemplates>
 </SCL>`;
+
+/** SCL with two IEDs that have LNodes in the same ConductingEquipment
+ *  with matching (ldInst, lnClass, lnInst, prefix). Removing both IEDs
+ *  sequentially should not create duplicate LNode key sequences. */
+export const sclDuplicateLNodes = `<SCL xmlns="http://www.iec.ch/61850/2003/SCL" version="2007" revision="B" release="4">
+<Header id="DuplicateLNodes"/>
+<Substation name="S1">
+  <LNode iedName="IED_A" ldInst="CBSW" lnClass="XCBR" lnInst="1" prefix=""/>
+  <LNode iedName="IED_B" ldInst="CBSW" lnClass="XCBR" lnInst="1" prefix=""/>
+  <VoltageLevel name="V1">
+    <LNode iedName="IED_A" ldInst="CBSW" lnClass="XCBR" lnInst="1" prefix=""/>
+    <LNode iedName="IED_B" ldInst="CBSW" lnClass="XCBR" lnInst="1" prefix=""/>
+    <Bay name="B1">
+      <LNode iedName="IED_A" ldInst="CBSW" lnClass="XCBR" lnInst="1" prefix=""/>
+      <LNode iedName="IED_B" ldInst="CBSW" lnClass="XCBR" lnInst="1" prefix=""/>
+      <ConductingEquipment name="QA1" type="CBR">
+        <LNode iedName="IED_A" ldInst="CBSW" lnClass="XCBR" lnInst="1" prefix=""/>
+        <LNode iedName="IED_B" ldInst="CBSW" lnClass="XCBR" lnInst="1" prefix=""/>
+        <LNode iedName="IED_A" ldInst="CBSW" lnClass="CSWI" lnInst="1" prefix=""/>
+        <LNode iedName="IED_B" ldInst="CBSW" lnClass="CSWI" lnInst="1" prefix=""/>
+      </ConductingEquipment>
+    </Bay>
+  </VoltageLevel>
+</Substation>
+
+<Substation name="S2">
+  <VoltageLevel name="V2">
+    <Bay name="B2">
+      <ConductingEquipment name="QA1" type="CBR">
+        <LNode iedName="IED_A" ldInst="CBSW" lnClass="XCBR" lnInst="1" prefix=""/>
+        <LNode iedName="IED_B" ldInst="CBSW" lnClass="XCBR" lnInst="1" prefix=""/>
+        <LNode iedName="IED_A" ldInst="CBSW" lnClass="CSWI" lnInst="1" prefix=""/>
+        <LNode iedName="IED_B" ldInst="CBSW" lnClass="CSWI" lnInst="1" prefix=""/>
+      </ConductingEquipment>
+    </Bay>
+  </VoltageLevel>
+</Substation>
+<IED name="IED_A" manufacturer="Dummy">
+  <AccessPoint name="AP1">
+    <Server>
+      <Authentication/>
+      <LDevice inst="CBSW">
+        <LN0 lnClass="LLN0" inst="" lnType="Dummy.LLN0"/>
+        <LN lnClass="XCBR" inst="1" lnType="Dummy.XCBR"/>
+        <LN lnClass="CSWI" inst="1" lnType="Dummy.CSWI"/>
+      </LDevice>
+    </Server>
+  </AccessPoint>
+</IED>
+<IED name="IED_B" manufacturer="Dummy">
+  <AccessPoint name="AP1">
+    <Server>
+      <Authentication/>
+      <LDevice inst="CBSW">
+        <LN0 lnClass="LLN0" inst="" lnType="Dummy.LLN0"/>
+        <LN lnClass="XCBR" inst="1" lnType="Dummy.XCBR"/>
+        <LN lnClass="CSWI" inst="1" lnType="Dummy.CSWI"/>
+      </LDevice>
+    </Server>
+  </AccessPoint>
+</IED>
+</SCL>`;
