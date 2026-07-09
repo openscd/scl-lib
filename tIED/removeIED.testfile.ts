@@ -585,6 +585,9 @@ export const sclDuplicateLNodes = `<SCL xmlns="http://www.iec.ch/61850/2003/SCL"
   <LNode iedName="IED_A" ldInst="CBSW" lnClass="XCBR" lnInst="1" prefix=""/>
   <LNode iedName="IED_B" ldInst="CBSW" lnClass="XCBR" lnInst="1" prefix=""/>
   <VoltageLevel name="V1">
+    <Private type="eieio">
+      <LNode iedName="IED_A" ldInst="CBSW" lnClass="XCBR" lnInst="1" prefix=""/>
+    </Private>
     <LNode iedName="IED_A" ldInst="CBSW" lnClass="XCBR" lnInst="1" prefix=""/>
     <LNode iedName="IED_B" ldInst="CBSW" lnClass="XCBR" lnInst="1" prefix=""/>
     <Bay name="B1">

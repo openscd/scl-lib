@@ -134,8 +134,7 @@ describe("Function to an remove the IED and its referenced elements", () => {
      * - Find all LNode references with matching iedName and either set them to None, or delete them if setting them to None would result in duplicate LNode keys within the same scope.
      *   The scope is defined as the nearest Bay, VL or Substation parent.
      */
-    describe("without 'preservveNodes' set (default)", () => {
-      //TODO consider changing this into a forEach (Substation, VL and Bay) array test.
+    describe("without 'preserveNodes' set (default)", () => {
       ["Bay", "VoltageLevel", "Substation"].forEach((scope) => {
         it(`deletes all LNodes found directly within a ${scope}`, () => {
           const sclDom = new DOMParser().parseFromString(
@@ -159,7 +158,8 @@ describe("Function to an remove the IED and its referenced elements", () => {
           // The number of LNodes set to None should not have changed.
           expect(after_spec_LNodeCount).to.equal(beforeSpec_LNodeCount);
 
-          //
+          const privateLNodeCount = sclDom.querySelectorAll(`${scope} > Private > LNode[iedName='IED_A']`).length;
+          expect(privateLNodeCount).to.equal(1, 'Private LNode count is wrong');
         });
       });
     });
@@ -169,7 +169,7 @@ describe("Function to an remove the IED and its referenced elements", () => {
       // Do keep in mind however, the subject SCL has 2 of everything. E.g. S1 & S2
       ["Bay", "VoltageLevel", "Substation"].forEach((scope) => {
         it(`Within a ${scope}, it sets all bound LNodes to None`, () => {
-          //we're using the "duplicates" test file, but by only deleting 1 IED, no duplicates occur (yet).
+          //We're using the "duplicates" test file, but by only deleting 1 IED, no duplicates occur (yet).
           const sclDom = new DOMParser().parseFromString(
             sclDuplicateLNodes,
             "application/xml",
@@ -196,7 +196,7 @@ describe("Function to an remove the IED and its referenced elements", () => {
 
       ["Bay", "VoltageLevel", "Substation"].forEach((scope) => {
         it(`Within a ${scope}, it removes 'would-be' duplicates`, () => {
-          //we're using the "duplicates" test file, but by only deleting 1 IED, no duplicates occur.
+          //We're using the "duplicates" test file, but by only deleting 1 IED, no duplicates occur.
           const sclDom = new DOMParser().parseFromString(
             sclDuplicateLNodes,
             "application/xml",

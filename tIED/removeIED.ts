@@ -58,7 +58,7 @@ const getLNodeScopeElement = (ln: Element): Element | null => {
   return null;
 };
 
-const removeLNode = (ln: Element): Remove => {
+const createRemoveEdit = (ln: Element): Remove => {
   return { node: ln };
 };
 
@@ -76,7 +76,7 @@ const getLNodesByIedName = (doc: XMLDocument, name: string): Element[] => {
  * Default handling for LNodes - find any (public) matching LNodes and create a Remove edit for them.
  */
 function removeBoundLNodes(ied: Element, name: string): Remove[] {
-  return (getLNodesByIedName(ied.ownerDocument, name) ?? []).map(removeLNode);
+  return (getLNodesByIedName(ied.ownerDocument, name) ?? []).map(createRemoveEdit);
 }
 
 /**
@@ -98,14 +98,14 @@ function detachLNodeBindings(
     return [];
   }
 
-  const UnboundLNodesByScope = new Map<Element, Set<string>>();
+  const unboundLNodesByScope = new Map<Element, Set<string>>();
   getLNodesByIedName(doc, "None").forEach((ln) => {
     const scope = getLNodeScopeElement(ln);
     if (scope !== null) {
-      let keys = UnboundLNodesByScope.get(scope);
+      let keys = unboundLNodesByScope.get(scope);
       if (!keys) {
         keys = new Set<string>();
-        UnboundLNodesByScope.set(scope, keys);
+        unboundLNodesByScope.set(scope, keys);
       }
       keys.add(lNodeKey(ln));
     }
@@ -118,11 +118,11 @@ function detachLNodeBindings(
         return;
       }
 
-      const keys = UnboundLNodesByScope.get(scope);
+      const keys = unboundLNodesByScope.get(scope);
 
       const key = lNodeKey(ln);
       if (keys && keys.has(key)) {
-        return removeLNode(ln);
+        return createRemoveEdit(ln);
       } else {
         return setLNodeToNone(ln);
       }
