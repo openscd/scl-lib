@@ -53,6 +53,12 @@ describe("Function to an remove the IED and its referenced elements", () => {
     expect(numberRemoves(edits, "LNode")).to.equal(1);
   });
 
+  it("returns empty LNode edits for an IED without substation LNodes with preserveLNodes option", () => {
+    const edits = removeIED({ node: client }, { preserveLNodes: true });
+    expect(numberRemoves(edits, "LNode")).to.equal(0);
+    expect(numberUpdates(edits, "LNode")).to.equal(0);
+  });
+
   it("removes ConnectedAPs as well", () => {
     const edits = removeIED({ node: publisher });
 
@@ -149,7 +155,7 @@ describe("Function to an remove the IED and its referenced elements", () => {
           const edits = removeIED({ node: iedA });
           handleEdit(edits);
           const after_iedA_lNodes = Array.from(
-            sclDom.querySelectorAll(`${scope} LNode[iedName="IED_A"]`),
+            sclDom.querySelectorAll(`${scope} > LNode[iedName="IED_A"]`),
           ).length;
           const after_spec_LNodeCount = (
             sclDom.querySelectorAll(`${scope} > LNode[iedName='None']`) ?? []
@@ -158,18 +164,20 @@ describe("Function to an remove the IED and its referenced elements", () => {
           // The number of LNodes set to None should not have changed.
           expect(after_spec_LNodeCount).to.equal(beforeSpec_LNodeCount);
 
-          const privateLNodeCount = sclDom.querySelectorAll(`${scope} > Private > LNode[iedName='IED_A']`).length;
-          expect(privateLNodeCount).to.equal(1, 'Private LNode count is wrong');
+          const privateLNodeCount = sclDom.querySelectorAll(
+            `${scope} > Private > LNode[iedName='IED_A']`,
+          ).length;
+          expect(privateLNodeCount).to.equal(1, "Private LNode count is wrong");
         });
       });
     });
 
-    describe.only("with preserveLNodes set", () => {
+    describe("with preserveLNodes set", () => {
       // Broke this into 3 separate tests, so the scope of the failure "might" be narrower.
       // Do keep in mind however, the subject SCL has 2 of everything. E.g. S1 & S2
       ["Bay", "VoltageLevel", "Substation"].forEach((scope) => {
         it(`Within a ${scope}, it sets all bound LNodes to None`, () => {
-          //We're using the "duplicates" test file, but by only deleting 1 IED, no duplicates occur (yet).
+          // We're using the "duplicates" test file, but by only deleting 1 IED, no duplicates occur (yet).
           const sclDom = new DOMParser().parseFromString(
             sclDuplicateLNodes,
             "application/xml",

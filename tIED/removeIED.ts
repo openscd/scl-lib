@@ -51,11 +51,8 @@ function removeIedSubscriptionsAndSupervisions(
 const lNodeKey = (ln: Element): string =>
   ["lnClass", "lnInst", "ldInst", "prefix"].map((a) => ln.getAttribute(a) ?? "").join("|");
 
-const getLNodeScopeElement = (ln: Element): Element | null => {
-  if (ln.closest("Private") === null) {
-    return ln.closest("Bay, VoltageLevel, Substation");
-  }
-  return null;
+const getLNodeScopeElement = (ln: Element): Element => {
+  return ln.closest("Bay, VoltageLevel, Substation")!;
 };
 
 const createRemoveEdit = (ln: Element): Remove => {
@@ -68,7 +65,7 @@ const setLNodeToNone = (ln: Element): SetAttributes => {
 
 const getLNodesByIedName = (doc: XMLDocument, name: string): Element[] => {
   return Array.from(
-    doc.querySelectorAll(`Substation LNode[iedName=${name}]`) ?? [],
+    doc.querySelectorAll(`Substation LNode[iedName=${name}]`),
   ).filter(isPublic);
 };
 
@@ -76,7 +73,7 @@ const getLNodesByIedName = (doc: XMLDocument, name: string): Element[] => {
  * Default handling for LNodes - find any (public) matching LNodes and create a Remove edit for them.
  */
 function removeBoundLNodes(ied: Element, name: string): Remove[] {
-  return (getLNodesByIedName(ied.ownerDocument, name) ?? []).map(createRemoveEdit);
+  return (getLNodesByIedName(ied.ownerDocument, name)).map(createRemoveEdit);
 }
 
 /**
@@ -101,23 +98,17 @@ function detachLNodeBindings(
   const unboundLNodesByScope = new Map<Element, Set<string>>();
   getLNodesByIedName(doc, "None").forEach((ln) => {
     const scope = getLNodeScopeElement(ln);
-    if (scope !== null) {
-      let keys = unboundLNodesByScope.get(scope);
-      if (!keys) {
-        keys = new Set<string>();
-        unboundLNodesByScope.set(scope, keys);
-      }
-      keys.add(lNodeKey(ln));
+    let keys = unboundLNodesByScope.get(scope);
+    if (!keys) {
+      keys = new Set<string>();
+      unboundLNodesByScope.set(scope, keys);
     }
+    keys.add(lNodeKey(ln));
   });
 
   return boundNodes
     .map((ln) => {
       const scope = getLNodeScopeElement(ln);
-      if (!scope) {
-        return;
-      }
-
       const keys = unboundLNodesByScope.get(scope);
 
       const key = lNodeKey(ln);

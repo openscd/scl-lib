@@ -582,6 +582,9 @@ export const scl = `<SCL xmlns="http://www.iec.ch/61850/2003/SCL" xmlns:esld="ht
 export const sclDuplicateLNodes = `<SCL xmlns="http://www.iec.ch/61850/2003/SCL" version="2007" revision="B" release="4">
 <Header id="DuplicateLNodes"/>
 <Substation name="S1">
+  <Private type="eieio">
+      <LNode iedName="IED_A" ldInst="CBSW" lnClass="XCBR" lnInst="1" prefix=""/>
+    </Private>
   <LNode iedName="IED_A" ldInst="CBSW" lnClass="XCBR" lnInst="1" prefix=""/>
   <LNode iedName="IED_B" ldInst="CBSW" lnClass="XCBR" lnInst="1" prefix=""/>
   <VoltageLevel name="V1">
@@ -591,6 +594,9 @@ export const sclDuplicateLNodes = `<SCL xmlns="http://www.iec.ch/61850/2003/SCL"
     <LNode iedName="IED_A" ldInst="CBSW" lnClass="XCBR" lnInst="1" prefix=""/>
     <LNode iedName="IED_B" ldInst="CBSW" lnClass="XCBR" lnInst="1" prefix=""/>
     <Bay name="B1">
+      <Private type="eieio">
+        <LNode iedName="IED_A" ldInst="CBSW" lnClass="XCBR" lnInst="1" prefix=""/>
+      </Private>
       <LNode iedName="IED_A" ldInst="CBSW" lnClass="XCBR" lnInst="1" prefix=""/>
       <LNode iedName="IED_B" ldInst="CBSW" lnClass="XCBR" lnInst="1" prefix=""/>
       <ConductingEquipment name="QA1" type="CBR">
