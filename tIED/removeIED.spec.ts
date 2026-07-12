@@ -5,7 +5,7 @@ import { isRemove, isUpdate } from "@openscd/oscd-api/utils.js";
 
 import { handleEdit } from "../foundation/helpers.test.js";
 
-import { scl } from "./removeIED.testfile.js";
+import { scl, sclDuplicateLNodes } from "./removeIED.testfile.js";
 
 import { removeIED } from "./removeIED.js";
 
@@ -47,10 +47,10 @@ describe("Function to an remove the IED and its referenced elements", () => {
     expect(removeIED({ node: publi }).length).to.equal(0);
   });
 
-  it("updates LNode iedName attributes to None as well", () => {
+  it("removes all bound LNodes", () => {
     const edits = removeIED({ node: subscriber1 });
 
-    expect(numberUpdates(edits, "LNode")).to.equal(1);
+    expect(numberRemoves(edits, "LNode")).to.equal(1);
   });
 
   it("removes ConnectedAPs as well", () => {
@@ -125,5 +125,137 @@ describe("Function to an remove the IED and its referenced elements", () => {
     ).filter((iedName) => iedName.textContent?.startsWith("Publisher"));
     // 1 supervised control block is not subscribed so is not removed
     expect(after.length).to.equal(1);
+  });
+
+  describe("referenced LNode's", () => {
+    /*
+     * Here we need to test:
+     * - Delete all LNode references found with matching iedName, BUT only inside the substation section (but not inside Private sections).
+     * - Find all LNode references with matching iedName and either set them to None, or delete them if setting them to None would result in duplicate LNode keys within the same scope.
+     *   The scope is defined as the nearest Bay, VL or Substation parent.
+     */
+    describe("without 'preserveNodes' set (default)", () => {
+      ["Bay", "VoltageLevel", "Substation"].forEach((scope) => {
+        it(`deletes all LNodes found directly within a ${scope}`, () => {
+          const sclDom = new DOMParser().parseFromString(
+            sclDuplicateLNodes,
+            "application/xml",
+          );
+          const iedA = sclDom.querySelector('IED[name="IED_A"]')!;
+          const beforeSpec_LNodeCount = (
+            sclDom.querySelectorAll(`${scope} > LNode[iedName='None']`) ?? []
+          ).length;
+
+          const edits = removeIED({ node: iedA });
+          handleEdit(edits);
+          const after_iedA_lNodes = Array.from(
+            sclDom.querySelectorAll(`${scope} LNode[iedName="IED_A"]`),
+          ).length;
+          const after_spec_LNodeCount = (
+            sclDom.querySelectorAll(`${scope} > LNode[iedName='None']`) ?? []
+          ).length;
+          expect(after_iedA_lNodes).to.equal(0);
+          // The number of LNodes set to None should not have changed.
+          expect(after_spec_LNodeCount).to.equal(beforeSpec_LNodeCount);
+
+          const privateLNodeCount = sclDom.querySelectorAll(`${scope} > Private > LNode[iedName='IED_A']`).length;
+          expect(privateLNodeCount).to.equal(1, 'Private LNode count is wrong');
+        });
+      });
+    });
+
+    describe.only("with preserveLNodes set", () => {
+      // Broke this into 3 separate tests, so the scope of the failure "might" be narrower.
+      // Do keep in mind however, the subject SCL has 2 of everything. E.g. S1 & S2
+      ["Bay", "VoltageLevel", "Substation"].forEach((scope) => {
+        it(`Within a ${scope}, it sets all bound LNodes to None`, () => {
+          //We're using the "duplicates" test file, but by only deleting 1 IED, no duplicates occur (yet).
+          const sclDom = new DOMParser().parseFromString(
+            sclDuplicateLNodes,
+            "application/xml",
+          );
+          const iedA = sclDom.querySelector('IED[name="IED_A"]')!;
+          const beforeSpec_LNodeCount = (
+            sclDom.querySelectorAll(`${scope} > LNode[iedName='None']`) ?? []
+          ).length;
+          const beforeIedA_LNodeCount = (
+            sclDom.querySelectorAll(`${scope} > LNode[iedName='IED_A']`) ?? []
+          ).length;
+
+          const edits = removeIED({ node: iedA }, { preserveLNodes: true });
+          handleEdit(edits);
+          const lNodes = Array.from(
+            sclDom.querySelectorAll(`${scope} > LNode[iedName="None"]`),
+          );
+          expect(lNodes.length).to.equal(
+            beforeSpec_LNodeCount + beforeIedA_LNodeCount,
+          );
+          //
+        });
+      });
+
+      ["Bay", "VoltageLevel", "Substation"].forEach((scope) => {
+        it(`Within a ${scope}, it removes 'would-be' duplicates`, () => {
+          //We're using the "duplicates" test file, but by only deleting 1 IED, no duplicates occur.
+          const sclDom = new DOMParser().parseFromString(
+            sclDuplicateLNodes,
+            "application/xml",
+          );
+          const iedA = sclDom.querySelector('IED[name="IED_A"]')!;
+          const iedB = sclDom.querySelector('IED[name="IED_B"]')!;
+
+          handleEdit(removeIED({ node: iedA }, { preserveLNodes: true }));
+          const beforeSpec_LNodeCount = (
+            sclDom.querySelectorAll(`${scope} > LNode[iedName='None']`) ?? []
+          ).length;
+          // After the first wave of deletions the SCL already has LNodes(iedName=None),
+          // which exactly match the LNodes we're about to remove.
+          // So when IED_B is removed (with preserveLNodes set), the LNodes(None)
+          // should not have changed.
+          handleEdit(removeIED({ node: iedB }, { preserveLNodes: true }));
+          const iedB_lNodesCount = Array.from(
+            sclDom.querySelectorAll(`${scope} > LNode[iedName="IED_B"]`),
+          ).length;
+          expect(iedB_lNodesCount).to.equal(0);
+          // Although we've removed IED_A and IED_B, the count should remain unchanged after
+          // removing IED_A, because both IED's are bound exactly the same.
+          const afterSpec_LNodeCount = (
+            sclDom.querySelectorAll(`${scope} > LNode[iedName='None']`) ?? []
+          ).length;
+          expect(afterSpec_LNodeCount).to.equal(beforeSpec_LNodeCount);
+        });
+      });
+
+      it("does not create duplicate LNode keys when removing both IEDs", () => {
+        const sclDom = new DOMParser().parseFromString(
+          sclDuplicateLNodes,
+          "application/xml",
+        );
+        const iedA = sclDom.querySelector('IED[name="IED_A"]')!;
+        const iedB = sclDom.querySelector('IED[name="IED_B"]')!;
+
+        handleEdit(removeIED({ node: iedA }));
+        handleEdit(removeIED({ node: iedB }));
+
+        const ce = sclDom.querySelector('ConductingEquipment[name="QA1"]')!;
+        const lNodes = Array.from(ce.querySelectorAll(":scope > LNode"));
+        const keys = lNodes.map(
+          (ln) =>
+            `${ln.getAttribute("ldInst")}|${ln.getAttribute(
+              "lnClass",
+            )}|${ln.getAttribute("lnInst")}|${ln.getAttribute(
+              "prefix",
+            )}|${ln.getAttribute("iedName")}`,
+        );
+        const uniqueKeys = new Set(keys);
+
+        expect(keys.length).to.equal(
+          uniqueKeys.size,
+          `Duplicate LNode keys found: ${keys
+            .filter((k, i) => keys.indexOf(k) !== i)
+            .join(", ")}`,
+        );
+      });
+    });
   });
 });
