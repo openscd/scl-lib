@@ -82,8 +82,8 @@ function validSubscriptionSupervision(
       return !!otherIED.querySelector(
         `:scope > AccessPoint > Server > LDevice 
           ExtRef[iedName="${oldIedName}"][srcLDInst="${srcLDInst}"][srcCBName="${srcCB.getAttribute(
-          "name",
-        )}"]`,
+            "name",
+          )}"]`,
       );
     })
     .map((srcCB) => {
@@ -263,7 +263,10 @@ function updateObjectReferences(
  * (other than supervision node GoCBRef values).
  * @returns - Set of addition edits updating all references SCL elements
  */
-export function updateIED(setAttributes: SetAttributes, checkPermission = false): EditV2[] {
+export function updateIED(
+  setAttributes: SetAttributes,
+  checkPermission = false,
+): EditV2[] {
   if (setAttributes.element.tagName !== "IED") return [];
   if (!setAttributes.attributes?.name) return [setAttributes];
 

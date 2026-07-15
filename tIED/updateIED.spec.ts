@@ -10,8 +10,9 @@ import { scl } from "./updateIED.testfile.js";
 import { updateIED } from "./updateIED.js";
 
 function numberUpdates(edits: EditV2[], tag: string): number {
-  return edits.filter((edit) => isSetAttributes(edit) && edit.element.tagName === tag)
-    .length;
+  return edits.filter(
+    (edit) => isSetAttributes(edit) && edit.element.tagName === tag,
+  ).length;
 }
 
 const pub = new DOMParser()

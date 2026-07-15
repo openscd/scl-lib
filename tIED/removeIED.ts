@@ -49,7 +49,9 @@ function removeIedSubscriptionsAndSupervisions(
 }
 
 const lNodeKey = (ln: Element): string =>
-  ["lnClass", "lnInst", "ldInst", "prefix"].map((a) => ln.getAttribute(a) ?? "").join("|");
+  ["lnClass", "lnInst", "ldInst", "prefix"]
+    .map((a) => ln.getAttribute(a) ?? "")
+    .join("|");
 
 const getLNodeScopeElement = (ln: Element): Element => {
   return ln.closest("Bay, VoltageLevel, Substation")!;
@@ -73,7 +75,7 @@ const getLNodesByIedName = (doc: XMLDocument, name: string): Element[] => {
  * Default handling for LNodes - find any (public) matching LNodes and create a Remove edit for them.
  */
 function removeBoundLNodes(ied: Element, name: string): Remove[] {
-  return (getLNodesByIedName(ied.ownerDocument, name)).map(createRemoveEdit);
+  return getLNodesByIedName(ied.ownerDocument, name).map(createRemoveEdit);
 }
 
 /**

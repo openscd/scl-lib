@@ -26,7 +26,7 @@ function isLNodeTypeReferenced(lNodeType: Element): boolean {
   const id = lNodeType.getAttribute("id");
 
   const linkedAnyLn = dtt?.ownerDocument.querySelector(
-    `:root > IED *[lnType="${id}"]`
+    `:root > IED *[lnType="${id}"]`,
   );
   return !!linkedAnyLn;
 }
@@ -36,9 +36,7 @@ function isDataTypeReferenced(dataType: Element): boolean {
 
   const id = dataType.getAttribute("id");
 
-  const linkedData = dtt?.querySelector(
-    `:scope *[type="${id}"]`
-  );
+  const linkedData = dtt?.querySelector(`:scope *[type="${id}"]`);
   return !!linkedData;
 }
 
@@ -49,13 +47,11 @@ function getOrphans(ddt: Element, saveOrphans: Element[] = []): Element[] {
 }
 
 function clonedDataType(dtt: Element, dataType: Element): Element {
-
-  return dtt.querySelector(`:scope > *[id="${dataType.getAttribute('id')}"]`)!;
-
+  return dtt.querySelector(`:scope > *[id="${dataType.getAttribute("id")}"]`)!;
 }
 
 function isDataTypeLinked(dataType: Element): boolean {
-  if (dataType.tagName === 'LNodeType') return isLNodeTypeReferenced(dataType);
+  if (dataType.tagName === "LNodeType") return isLNodeTypeReferenced(dataType);
 
   return isDataTypeReferenced(dataType);
 }
@@ -68,12 +64,14 @@ function isDataTypeLinked(dataType: Element): boolean {
  */
 export function removeDataType(
   dtRemove: Remove,
-  options: RemoveDataTypeOptions = { force: false }
+  options: RemoveDataTypeOptions = { force: false },
 ): Remove[] {
   const dataType = dtRemove.node as Element;
 
   const dtt = dataType.closest("DataTypeTemplates");
-  const dttClone = dataType.closest("DataTypeTemplates")?.cloneNode(true) as Element;
+  const dttClone = dataType
+    .closest("DataTypeTemplates")
+    ?.cloneNode(true) as Element;
   if (!dttClone) return [];
 
   if (isDataTypeLinked(dataType) && !options.force) return [];

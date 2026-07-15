@@ -1,4 +1,4 @@
-import { Insert, Remove } from "@openscd/oscd-api"
+import { Insert, Remove } from "@openscd/oscd-api";
 
 import { createElement } from "../foundation/utils.js";
 import { getReference } from "../tBaseElement/getReference.js";

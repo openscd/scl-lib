@@ -130,10 +130,7 @@ describe("update Substation element", () => {
 
       expect(
         updates.find(
-          ({
-            element: { tagName },
-            attributes,
-          }) =>
+          ({ element: { tagName }, attributes }) =>
             tagName === "Terminal" &&
             attributes?.connectivityNode === "AA2/E1/BB1/L1" &&
             attributes?.substationName === "AA2",
@@ -142,10 +139,7 @@ describe("update Substation element", () => {
 
       expect(
         updates.find(
-          ({
-            element: { tagName },
-            attributes,
-          }) =>
+          ({ element: { tagName }, attributes }) =>
             tagName === "NeutralPoint" &&
             attributes?.connectivityNode === "AA2/E1/BB1/L1" &&
             attributes?.substationName === "AA2",

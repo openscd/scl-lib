@@ -38,12 +38,16 @@ const pDAInValid = `<ExtRef
 
 describe("A function to determine the CDC and bType though pXXX attributes", () => {
   it("return undefined with missing pDO", () =>
-    expect(extRefTypeRestrictions(findElement(unrestrictedExtRef, "ExtRef")! as Element))
-      .to.be.undefined);
+    expect(
+      extRefTypeRestrictions(
+        findElement(unrestrictedExtRef, "ExtRef")! as Element,
+      ),
+    ).to.be.undefined);
 
   it("return undefined with invalid pDO", () =>
-    expect(extRefTypeRestrictions(findElement(pDOInValid1, "ExtRef")! as Element)).to.be
-      .undefined);
+    expect(
+      extRefTypeRestrictions(findElement(pDOInValid1, "ExtRef")! as Element),
+    ).to.be.undefined);
 
   describe("with pDO only given ExtRefs", () => {
     it("return correct CDC with a valid pDO", () =>
@@ -57,23 +61,29 @@ describe("A function to determine the CDC and bType though pXXX attributes", () 
       ).to.deep.equal({ cdc: "WYE" }));
 
     it("returns undefined an invalid pDO", () =>
-      expect(extRefTypeRestrictions(findElement(pDOInValid, "ExtRef")! as Element)).to
-        .undefined);
+      expect(
+        extRefTypeRestrictions(findElement(pDOInValid, "ExtRef")! as Element),
+      ).to.undefined);
   });
 
   describe("with pDO and pDA given ExtRefs", () => {
     it("return correct CDC and bType with a valid pDO and pDA", () =>
       expect(
-        extRefTypeRestrictions(findElement(pDOandpDAValid1, "ExtRef")! as Element),
+        extRefTypeRestrictions(
+          findElement(pDOandpDAValid1, "ExtRef")! as Element,
+        ),
       ).to.deep.equal({ cdc: "SAV", bType: "INT32" }));
 
     it("return correct CDC and bType with another valid pDO and pDA", () =>
       expect(
-        extRefTypeRestrictions(findElement(pDOandpDAValid2, "ExtRef")! as Element),
+        extRefTypeRestrictions(
+          findElement(pDOandpDAValid2, "ExtRef")! as Element,
+        ),
       ).to.deep.equal({ cdc: "CMV", bType: "FLOAT32" }));
 
     it("returns undefined with invalid pDA", () =>
-      expect(extRefTypeRestrictions(findElement(pDAInValid, "ExtRef")! as Element)).to
-        .undefined);
+      expect(
+        extRefTypeRestrictions(findElement(pDAInValid, "ExtRef")! as Element),
+      ).to.undefined);
   });
 });

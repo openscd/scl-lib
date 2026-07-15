@@ -1,4 +1,3 @@
-
 export const docWithComplexMmxuTarget = `<SCL
   xmlns="http://www.iec.ch/61850/2003/SCL"
   xmlns:eTr_6-100="http://www.iec.ch/61850/2019/SCL/6-100"
