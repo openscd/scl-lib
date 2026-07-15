@@ -3,6 +3,10 @@ coverage
 dist
 doc
 
+# vitest browser-mode failure artifacts
+.vitest-attachments
+__screenshots__
+
 .vscode
 .idea
 *.log

@@ -1,4 +1,4 @@
-import { expect } from "chai";
+import { expect } from "vitest";
 import { getReference } from "./getReference.js";
 
 describe("getReference", () => {

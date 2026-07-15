@@ -1,4 +1,4 @@
-import { expect } from "chai";
+import { expect } from "vitest";
 import { parentTags } from "./parentTags";
 
 describe("Utility function to get parent tags for SCL element", () => {

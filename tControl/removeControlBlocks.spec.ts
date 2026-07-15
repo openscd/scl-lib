@@ -1,4 +1,4 @@
-import { expect } from "chai";
+import { expect } from "vitest";
 import { Remove } from "../foundation/utils.js";
 
 import { findElement } from "../foundation/helpers.test.js";

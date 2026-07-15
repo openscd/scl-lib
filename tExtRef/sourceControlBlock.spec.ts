@@ -1,4 +1,4 @@
-import { expect } from "chai";
+import { expect } from "vitest";
 
 import { sourceControlBlock } from "./sourceControlBlock.js";
 import { sourceControlBlockDoc } from "./sourceControlBlock.testfiles.js";

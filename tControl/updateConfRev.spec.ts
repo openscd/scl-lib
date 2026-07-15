@@ -1,4 +1,4 @@
-import { expect } from "chai";
+import { expect } from "vitest";
 import { updatedConfRev } from "./updateConfRev.js";
 
 describe("updatedConfRev", () => {

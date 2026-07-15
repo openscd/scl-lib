@@ -1,4 +1,4 @@
-import { expect } from "chai";
+import { expect } from "vitest";
 
 import { updateDataSet } from "../tDataSet/updateDataSet.js";
 

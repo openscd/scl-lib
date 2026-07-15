@@ -1,4 +1,4 @@
-import { expect } from "chai";
+import { expect } from "vitest";
 
 import { controlBlockGseOrSmv } from "./controlBlockGseOrSmv.js";
 import { controlBlockGseOrSmvDoc } from "./controlBlockGseOrSmv.testfiles.js";

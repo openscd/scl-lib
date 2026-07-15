@@ -1,4 +1,4 @@
-import { expect } from "chai";
+import { expect } from "vitest";
 
 import { supervision } from "./supervision.testfiles";
 import { removeSupervision } from "./removeSupervision";

@@ -1,4 +1,4 @@
-import { expect } from "chai";
+import { expect } from "vitest";
 import { getChildren } from "./getChildren.js";
 
 const nonSense = new DOMParser()

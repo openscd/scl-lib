@@ -1,4 +1,4 @@
-import { expect } from "chai";
+import { expect } from "vitest";
 import { findElement } from "../foundation/helpers.test.js";
 
 import { canAddFCDA, maxAttributes } from "./canAddFCDA.js";

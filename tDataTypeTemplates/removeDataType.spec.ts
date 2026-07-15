@@ -1,4 +1,4 @@
-import { expect } from "chai";
+import { expect } from "vitest";
 import { findElement } from "../foundation/helpers.test.js";
 
 import { invalidScl, mmxu } from "./removeDataType.testfiles.js";

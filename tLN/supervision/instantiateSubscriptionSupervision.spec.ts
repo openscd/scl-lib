@@ -1,4 +1,4 @@
-import { expect } from "chai";
+import { expect } from "vitest";
 
 import { orphanControlBlock, supervision } from "./supervision.testfiles.js";
 import { instantiateSubscriptionSupervision } from "./instantiateSubscriptionSupervision.js";

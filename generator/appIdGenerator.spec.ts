@@ -1,4 +1,4 @@
-import { expect } from "chai";
+import { expect } from "vitest";
 
 import { appIdGenerator } from "./appIdGenerator.js";
 
