@@ -1,4 +1,4 @@
-import { expect } from "chai";
+import { expect } from "vitest";
 import { isSubscribed } from "./isSubscribed";
 
 const scl = `

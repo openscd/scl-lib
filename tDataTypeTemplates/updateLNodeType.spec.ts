@@ -1,4 +1,4 @@
-import { expect } from "chai";
+import { expect } from "vitest";
 
 import { Insert, Remove } from "@openscd/oscd-api"
 

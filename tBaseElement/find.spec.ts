@@ -2,7 +2,7 @@ import { validScl } from "./validScl.testfiles.js";
 
 import { find, selectorTags } from "./find.js";
 import { identity } from "./identity.js";
-import { expect } from "chai";
+import { expect } from "vitest";
 import { isPublic } from "./isPublic.js";
 
 const doc = new DOMParser().parseFromString(validScl, "application/xml")!;

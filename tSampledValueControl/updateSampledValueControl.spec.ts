@@ -1,4 +1,4 @@
-import { expect } from "chai";
+import { expect } from "vitest";
 
 import { Insert, Remove, SetAttributes } from "@openscd/oscd-api";
 import { isInsert, isRemove, isSetAttributes } from "@openscd/oscd-api/utils.js";

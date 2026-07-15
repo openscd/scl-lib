@@ -1,4 +1,4 @@
-import { expect } from "chai";
+import { expect } from "vitest";
 
 import {
   nsd72,
@@ -33,7 +33,7 @@ describe("NSD to Json parsing function", () => {
         expect(data[key]).to.deep.equal(sClass[key]);
       });
     });
-  }).timeout(10000);
+  }, 30000);
 
   it("returns object that compares well to static 7-3 ln classes", async () => {
     supportedCdc.forEach((cdc) => {
@@ -44,7 +44,7 @@ describe("NSD to Json parsing function", () => {
         expect(data[key]).to.deep.equal(commonDataClass[key]);
       });
     });
-  }).timeout(10000);
+  }, 30000);
 
   it("returns object that compares well to static 7-420 classes", async () => {
     const data = nsdToJson("DSTK");

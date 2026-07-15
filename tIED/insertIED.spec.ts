@@ -1,4 +1,4 @@
-import { expect } from "chai";
+import { expect } from "vitest";
 
 import { Insert, SetAttributes } from "@openscd/oscd-api";
 import { handleEdit } from "../foundation/helpers.test.js";

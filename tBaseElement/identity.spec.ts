@@ -1,4 +1,4 @@
-import { expect } from "chai";
+import { expect } from "vitest";
 
 import { edgeScl } from "./edgeScl.testfiles.js";
 import { validScl } from "./validScl.testfiles.js";

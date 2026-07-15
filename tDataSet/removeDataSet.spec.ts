@@ -1,4 +1,4 @@
-import { expect } from "chai";
+import { expect } from "vitest";
 import { Remove, SetAttributes } from "@openscd/oscd-api";
 
 import { findElement } from "../foundation/helpers.test.js";

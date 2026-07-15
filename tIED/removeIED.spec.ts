@@ -1,4 +1,4 @@
-import { expect } from "chai";
+import { expect } from "vitest";
 
 import { EditV2 } from "@openscd/oscd-api";
 import { isRemove, isUpdate } from "@openscd/oscd-api/utils.js";
