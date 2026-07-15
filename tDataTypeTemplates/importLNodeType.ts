@@ -7,7 +7,7 @@ import { isEqualNode } from "./foundation.js";
 
 type ImportLNodeTypeOptions = {
   overwrite?: boolean;
-}
+};
 
 function removeDuplicates(inserts: Insert[]): Insert[] {
   const uniqueInserts: Insert[] = [];
@@ -27,10 +27,10 @@ function removeDuplicates(inserts: Insert[]): Insert[] {
 
 function insertDataType(
   dataType: Element,
-  targetDataTypeTemplate: Element
+  targetDataTypeTemplate: Element,
 ): Insert | undefined {
   const existingDataType = targetDataTypeTemplate.querySelector(
-    `${dataType.tagName}[id="${dataType.getAttribute("id")}"] `
+    `${dataType.tagName}[id="${dataType.getAttribute("id")}"] `,
   );
   if (existingDataType && isEqualNode(dataType, existingDataType)) return;
 
@@ -48,7 +48,7 @@ function insertDataTypes(dataTypes: Element[], targetScl: Element): Insert[] {
   const dataTypeEdit: Insert[] = [];
 
   const targetDataTypeTemplates = targetScl.querySelector(
-    ":root > DataTypeTemplates"
+    ":root > DataTypeTemplates",
   )
     ? targetScl.querySelector(":root > DataTypeTemplates")!
     : createElement(targetScl.ownerDocument, "DataTypeTemplates", {});
@@ -64,7 +64,7 @@ function insertDataTypes(dataTypes: Element[], targetScl: Element): Insert[] {
   dataTypeEdit.push(
     ...(dataTypes
       .map((dataType) => insertDataType(dataType, targetDataTypeTemplates))
-      .filter((insert) => !!insert) as Insert[])
+      .filter((insert) => !!insert) as Insert[]),
   );
 
   return removeDuplicates(dataTypeEdit);
@@ -74,14 +74,14 @@ function getDaTypes(parent: Element): Element[] {
   const doc = parent.ownerDocument;
 
   const daTypes = Array.from(
-    parent.querySelectorAll(":scope > DA, :scope > BDA")
+    parent.querySelectorAll(":scope > DA, :scope > BDA"),
   )
     .map((dAorBda) =>
       doc.querySelector(
         `:root > DataTypeTemplates > DAType[id="${dAorBda.getAttribute(
-          "type"
-        )}"]`
-      )
+          "type",
+        )}"]`,
+      ),
     )
     .filter((daType) => !!daType) as Element[];
 
@@ -94,14 +94,14 @@ function getDoTypes(parent: Element): Element[] {
   const doc = parent.ownerDocument;
 
   const doTypes = Array.from(
-    parent.querySelectorAll(":scope > DO, :scope > SDO")
+    parent.querySelectorAll(":scope > DO, :scope > SDO"),
   )
     .map((dOorSdo) =>
       doc.querySelector(
         `:root > DataTypeTemplates > DOType[id="${dOorSdo.getAttribute(
-          "type"
-        )}"]`
-      )
+          "type",
+        )}"]`,
+      ),
     )
     .filter((doType) => !!doType) as Element[];
 
@@ -120,7 +120,7 @@ function getDoTypes(parent: Element): Element[] {
 export function importLNodeType(
   lNodeType: Element,
   targetDoc: XMLDocument,
-  option: ImportLNodeTypeOptions = {}
+  option: ImportLNodeTypeOptions = {},
 ): EditV2[] {
   const doc = lNodeType.ownerDocument;
   const targetScl = targetDoc.querySelector("SCL");
@@ -134,24 +134,27 @@ export function importLNodeType(
   const enumTypes = [...doTypes, ...daTypes].flatMap(
     (doOrDaType) =>
       Array.from(
-        doOrDaType.querySelectorAll('BDA[bType="Enum"], DA[bType="Enum"]')
+        doOrDaType.querySelectorAll('BDA[bType="Enum"], DA[bType="Enum"]'),
       )
         .map((dAorBda) =>
-          doc.querySelector(`EnumType[id="${dAorBda.getAttribute("type")}"]`)
+          doc.querySelector(`EnumType[id="${dAorBda.getAttribute("type")}"]`),
         )
-        .filter((enumType) => !!enumType) as Element[]
+        .filter((enumType) => !!enumType) as Element[],
   );
 
   const inserts = insertDataTypes(
     [lNodeType, ...doTypes, ...daTypes, ...enumTypes],
-    targetScl
+    targetScl,
   );
-  if (option.overwrite === undefined || option.overwrite === false) return inserts;
+  if (option.overwrite === undefined || option.overwrite === false)
+    return inserts;
 
   const duplicatedLNodeType = targetScl.querySelector(
-    `:root > DataTypeTemplates > LNodeType[id="${lNodeType.getAttribute("id")}"]`
+    `:root > DataTypeTemplates > LNodeType[id="${lNodeType.getAttribute(
+      "id",
+    )}"]`,
   );
   if (!duplicatedLNodeType) return inserts;
 
-  return [...inserts, { node: duplicatedLNodeType }]
+  return [...inserts, { node: duplicatedLNodeType }];
 }

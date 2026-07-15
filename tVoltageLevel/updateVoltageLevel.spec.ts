@@ -150,10 +150,7 @@ describe("update VoltageLevel element", () => {
 
       expect(
         updates.find(
-          ({
-            element: { tagName },
-            attributes,
-          }) =>
+          ({ element: { tagName }, attributes }) =>
             tagName === "NeutralPoint" &&
             attributes?.["voltageLevelName"] === "E2" &&
             attributes?.["connectivityNode"] === "AA1/E2/BB1/L1",

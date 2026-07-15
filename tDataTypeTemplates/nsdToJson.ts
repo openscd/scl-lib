@@ -75,7 +75,7 @@ export type DaDescription = {
   defaultValue?: string;
   presCondArgs?: string;
   children?: DaChildren;
-  val?: string
+  val?: string;
 };
 
 export type CdcChildren = Record<
@@ -101,7 +101,7 @@ type CdcDescription = {
   isArray?: string;
   sizeAttribute?: string;
   children: CdcChildren;
-  typeKindParameterized?: string
+  typeKindParameterized?: string;
 };
 
 export type LNodeDescription = Record<string, CdcDescription>;
@@ -180,7 +180,6 @@ export function nsdToJson(
   lnClassOrCdc: string,
   nsds?: NameSpaceDescription,
 ): LNodeDescription | CdcChildren | undefined {
-
   const doc74 = nsds && nsds["74"] ? nsds["74"] : defaultDoc74;
   const doc7420 = nsds && nsds["7420"] ? nsds["7420"] : defaultDoc7420;
 
@@ -235,7 +234,7 @@ export function nsdToJson(
   function getSubDataAttributes(dataAttribute: Element): Element[] {
     const type = dataAttribute.getAttribute("type");
 
-    return getSubDataAttributesType(type)
+    return getSubDataAttributesType(type);
   }
 
   function getDataAttributesType(type: string | null): Element[] {
@@ -277,7 +276,7 @@ export function nsdToJson(
   function getSubDataObjects(dataObject: Element): Element[] {
     const type = dataObject.getAttribute("type");
 
-    return getSubDataObjectsType(type)
+    return getSubDataObjectsType(type);
   }
 
   function getDataObjects(lnClass: Element): Element[] {
@@ -538,8 +537,12 @@ export function nsdToJson(
   }
 
   function dataObjectName(dataObject: Element): string {
-    const multiInstances = ['Omulti', 'Mmulti']
-    const instance = multiInstances.includes(dataObject.getAttribute("presCond")!) ? '1' : '';
+    const multiInstances = ["Omulti", "Mmulti"];
+    const instance = multiInstances.includes(
+      dataObject.getAttribute("presCond")!,
+    )
+      ? "1"
+      : "";
     const name = dataObject.getAttribute("name")!;
     return `${name}${instance}`;
   }
@@ -553,7 +556,7 @@ export function nsdToJson(
       "transient",
     ].map((attr) => dataObject.getAttribute(attr)!);
 
-    const name = dataObjectName(dataObject);   // adopt when presCond is Omulti
+    const name = dataObjectName(dataObject); // adopt when presCond is Omulti
 
     const tagName = dataObject.tagName;
 
@@ -625,13 +628,13 @@ export function nsdToJson(
     if (deprecated) data["deprecated"] = deprecated;
     if (isArray) data["isArray"] = isArray;
     if (sizeAttribute) data["sizeAttribute"] = sizeAttribute;
-    if (typeKindParameterized) data["typeKindParameterized"] = typeKindParameterized;
+    if (typeKindParameterized)
+      data["typeKindParameterized"] = typeKindParameterized;
 
     return data;
   }
 
   function CdcChildren(type: string): CdcChildren {
-
     const children: CdcChildren = {};
     getSubDataObjectsType(type).forEach((dataObject) => {
       const name = dataObject.getAttribute("name")!;
@@ -642,11 +645,7 @@ export function nsdToJson(
     getDataAttributesType(type).forEach((dataAttribute) => {
       const name = dataAttribute.getAttribute("name")!;
 
-      children[name] = nsdDataAttribute(
-        dataAttribute,
-        undefined,
-        undefined,
-      );
+      children[name] = nsdDataAttribute(dataAttribute, undefined, undefined);
     });
 
     getServiceDataAttributesType(type).forEach((serviceDataAttribute) => {
@@ -659,11 +658,12 @@ export function nsdToJson(
   }
 
   if (lnClassOrCdc === undefined) return;
-  else if (isSupportedCdc(lnClassOrCdc))
-    return CdcChildren(lnClassOrCdc);
+  else if (isSupportedCdc(lnClassOrCdc)) return CdcChildren(lnClassOrCdc);
   else {
     const nsdLnClass74 = doc74.querySelector(`LNClass[name="${lnClassOrCdc}"]`);
-    const nsdLnClass7420 = doc7420.querySelector(`LNClass[name="${lnClassOrCdc}"]`);
+    const nsdLnClass7420 = doc7420.querySelector(
+      `LNClass[name="${lnClassOrCdc}"]`,
+    );
 
     const nsdLnClass = nsdLnClass74 || nsdLnClass7420;
     if (!nsdLnClass) return undefined;
@@ -675,6 +675,6 @@ export function nsdToJson(
       lnClassJson[name] = nsdDataObject(dataObject);
     });
 
-    return lnClassJson
+    return lnClassJson;
   }
 }

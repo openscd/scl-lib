@@ -19,15 +19,15 @@ const completeTemplate = findElement(competeBayTemplate) as XMLDocument;
 const invalidTemplate = findElement(invalidBayTemplate) as XMLDocument;
 const tctrLNodeType = findElement(
   baseDataTypes,
-  'LNodeType[id="Dummy.TCTR"]'
+  'LNodeType[id="Dummy.TCTR"]',
 ) as Element;
 const mmxuLNodeType = findElement(
   baseDataTypes,
-  'LNodeType[id="Dummy.MMXU"]'
+  'LNodeType[id="Dummy.MMXU"]',
 ) as Element;
 const tctrHardUpdate = findElement(
   hardUpdate,
-  'LNodeType[id="Dummy.TCTR"]'
+  'LNodeType[id="Dummy.TCTR"]',
 ) as Element;
 
 describe("Function to import LNodeType with its sub data", () => {
@@ -76,14 +76,18 @@ describe("Function to import LNodeType with its sub data", () => {
   });
 
   it("allows to overwrite existing LNodeType", () => {
-    const edits1 = importLNodeType(tctrHardUpdate, completeTemplate, { overwrite: true }) as Insert[];
+    const edits1 = importLNodeType(tctrHardUpdate, completeTemplate, {
+      overwrite: true,
+    }) as Insert[];
 
     expect(edits1.length).to.equal(2);
 
     expect(edits1[0]).to.satisfies(isInsert);
     expect(edits1[1]).to.satisfies(isRemove);
 
-    const edits2 = importLNodeType(tctrHardUpdate, completeTemplate, { overwrite: false }) as Insert[];
+    const edits2 = importLNodeType(tctrHardUpdate, completeTemplate, {
+      overwrite: false,
+    }) as Insert[];
 
     expect(edits2.length).to.equal(1);
 

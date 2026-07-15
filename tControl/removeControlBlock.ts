@@ -29,7 +29,9 @@ export function removeControlBlock(remove: Remove): (Remove | SetAttributes)[] {
 
   const controlBlock = remove.node as Element;
 
-  const ctrlBlockRemoveAction: (Remove | SetAttributes)[] = [{ node: controlBlock }];
+  const ctrlBlockRemoveAction: (Remove | SetAttributes)[] = [
+    { node: controlBlock },
+  ];
 
   const dataSet = controlBlock.parentElement?.querySelector(
     `DataSet[name="${controlBlock.getAttribute("datSet")}"]`,

@@ -19,7 +19,9 @@ import { updateDatSet } from "../tControl/updateDatSet.js";
  * @param attributes -
  * @returns action array to update all `GSEControl` attributes
  */
-export function updateGSEControl(setAttributes: SetAttributes): (SetAttributes | Remove | Insert)[] {
+export function updateGSEControl(
+  setAttributes: SetAttributes,
+): (SetAttributes | Remove | Insert)[] {
   if (setAttributes.element.tagName !== "GSEControl") return [];
 
   const updates: (SetAttributes | Remove | Insert)[] = [];
@@ -32,17 +34,22 @@ export function updateGSEControl(setAttributes: SetAttributes): (SetAttributes |
     }));
 
     const supervisionUpdates: (Remove | Insert)[] = Array.from(
-      setAttributes.element.ownerDocument.querySelectorAll('*[lnClass="LGOS"] Val'),
+      setAttributes.element.ownerDocument.querySelectorAll(
+        '*[lnClass="LGOS"] Val',
+      ),
     )
-      .filter((val) => val.textContent === controlBlockObjRef(setAttributes.element))
+      .filter(
+        (val) => val.textContent === controlBlockObjRef(setAttributes.element),
+      )
       .flatMap((val) => {
         const [path] = controlBlockObjRef(setAttributes.element)!.split(".");
         const oldValContent = Array.from(val.childNodes).find(
           (node) => node.nodeType === Node.TEXT_NODE,
         )!;
-        const newValContent = setAttributes.element.ownerDocument.createTextNode(
-          `${path}.${setAttributes.attributes!.name}`,
-        ) as Text;
+        const newValContent =
+          setAttributes.element.ownerDocument.createTextNode(
+            `${path}.${setAttributes.attributes!.name}`,
+          ) as Text;
 
         return [
           { node: oldValContent },

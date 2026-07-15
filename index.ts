@@ -1,6 +1,4 @@
-export {
-  TreeSelection,
-} from "./foundation/utils.js";
+export { TreeSelection } from "./foundation/utils.js";
 
 export { updateBay } from "./tBay/updateBay.js";
 export { updateVoltageLevel } from "./tVoltageLevel/updateVoltageLevel.js";
@@ -69,8 +67,6 @@ export {
 export { sourceControlBlock } from "./tExtRef/sourceControlBlock.js";
 export { isSubscribed } from "./tExtRef/isSubscribed.js";
 
-
-
 export {
   LNodeDescription,
   NameSpaceDescription,
@@ -79,7 +75,10 @@ export {
 
 export { insertSelectedLNodeType } from "./tDataTypeTemplates/insertSelectedLNodeType.js";
 
-export { removeDataType, RemoveDataTypeOptions } from "./tDataTypeTemplates/removeDataType.js"
+export {
+  removeDataType,
+  RemoveDataTypeOptions,
+} from "./tDataTypeTemplates/removeDataType.js";
 export { importLNodeType } from "./tDataTypeTemplates/importLNodeType.js";
 export { updateLNodeType } from "./tDataTypeTemplates/updateLNodeType.js";
 export { lNodeTypeToSelection } from "./tDataTypeTemplates/lNodeTypeToSelection.js";

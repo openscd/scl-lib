@@ -711,7 +711,7 @@ export const bcrChildren = {
     dchg: "true",
     descID: "IEC61850_7_3.CDCStatusInfo::BCR.strTm.desc",
     presCond: "OF",
-    presCondArgs: "frVal"
+    presCondArgs: "frVal",
   },
   frPd: {
     tagName: "DataAttribute",

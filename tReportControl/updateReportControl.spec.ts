@@ -29,7 +29,10 @@ describe("update ReportControl element", () => {
 
   describe("when no name attribute is changed", () => {
     it("updates ReportControl attributes and confRev", () => {
-      const reportControl = findElement(subscribedReport, "ReportControl")! as Element;
+      const reportControl = findElement(
+        subscribedReport,
+        "ReportControl",
+      )! as Element;
       const edits = updateReportControl({
         element: reportControl,
         attributes,
@@ -45,7 +48,10 @@ describe("update ReportControl element", () => {
     });
 
     it("updates confRev of DataSet change ReportControl", () => {
-      const reportControl = findElement(subscribedReport, "ReportControl")! as Element;
+      const reportControl = findElement(
+        subscribedReport,
+        "ReportControl",
+      )! as Element;
       const edits = updateReportControl({
         element: reportControl,
         attributes: { datSet: "someDataSet" },
@@ -63,7 +69,10 @@ describe("update ReportControl element", () => {
 
   describe("when name attribute is changed", () => {
     it("also updates subscribed ExtRefs", () => {
-      const reportControl = findElement(subscribedReport, "ReportControl")! as Element;
+      const reportControl = findElement(
+        subscribedReport,
+        "ReportControl",
+      )! as Element;
       const edits = updateReportControl({
         element: reportControl,
         attributes: {

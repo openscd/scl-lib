@@ -4330,8 +4330,8 @@ export const tctr = {
           TPM: {
             literalVal: "11",
             name: "TPM",
-            tagName: "Literal"
-          }
+            tagName: "Literal",
+          },
         },
       },
       d: {

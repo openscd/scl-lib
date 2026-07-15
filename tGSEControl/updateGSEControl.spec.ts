@@ -1,7 +1,11 @@
 import { expect } from "chai";
 
 import { Insert, Remove, SetAttributes } from "@openscd/oscd-api";
-import { isInsert, isRemove, isSetAttributes } from "@openscd/oscd-api/utils.js";
+import {
+  isInsert,
+  isRemove,
+  isSetAttributes,
+} from "@openscd/oscd-api/utils.js";
 
 import { gseControlDoc } from "./gsecontrol.testfiles.js";
 

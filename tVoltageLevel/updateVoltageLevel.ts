@@ -112,7 +112,9 @@ function updateTerminals(
 /** Updates `VoltageLevel` attributes and cross-referenced elements
  * @param setAttributes - update edit on `VoltageLevel` attributes
  * @returns Completed update edit array */
-export function updateVoltageLevel(setAttributes: SetAttributes): SetAttributes[] {
+export function updateVoltageLevel(
+  setAttributes: SetAttributes,
+): SetAttributes[] {
   if (setAttributes.element.tagName !== "VoltageLevel") return [setAttributes];
 
   const voltageLevel = setAttributes.element;
@@ -126,7 +128,8 @@ export function updateVoltageLevel(setAttributes: SetAttributes): SetAttributes[
     ?.getAttribute("name");
 
   const newName = attributes.name;
-  if (!substationName || !oldName || oldName === newName) return [setAttributes];
+  if (!substationName || !oldName || oldName === newName)
+    return [setAttributes];
 
   return [setAttributes].concat(
     ...updateConnectivityNodes(voltageLevel, {

@@ -119,7 +119,8 @@ describe("update Bay element", () => {
           .filter(isSetAttributes)
           .filter(
             ({ attributes }) =>
-              attributes?.connectivityNode === "AA1/E1/Q03/L1" && attributes?.bayName === "Q03",
+              attributes?.connectivityNode === "AA1/E1/Q03/L1" &&
+              attributes?.bayName === "Q03",
           ),
       ).to.have.lengthOf(2);
       expect(
@@ -127,7 +128,8 @@ describe("update Bay element", () => {
           .filter(isSetAttributes)
           .find(
             ({ attributes }) =>
-              attributes?.connectivityNode === "AA1/E1/Q03/L2" && attributes?.bayName === "Q03",
+              attributes?.connectivityNode === "AA1/E1/Q03/L2" &&
+              attributes?.bayName === "Q03",
           ),
       ).to.exist;
     });

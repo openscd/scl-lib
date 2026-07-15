@@ -1098,7 +1098,7 @@ export const apcChildren = {
     dchg: "true",
     descID: "IEC61850_7_3.CDCControl::APC.dbRef.desc",
     presCond: "MO",
-    presCondArgs: "db"
+    presCondArgs: "db",
   },
   d: {
     tagName: "DataAttribute",

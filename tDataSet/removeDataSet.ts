@@ -26,12 +26,12 @@ export function removeDataSet(remove: Remove): (Remove | SetAttributes)[] {
   const extRefEdits: (Remove | SetAttributes)[] = [];
   extRefEdits.push(...unsubscribe(extRefs));
 
-  const ctrlBlockUpdates: (Remove | SetAttributes)[] = controlBlocks(dataSet).map(
-    (ctrlBlock) => ({
-      element: ctrlBlock,
-      attributes: { datSet: null, confRev: updatedConfRev(ctrlBlock) },
-    }),
-  );
+  const ctrlBlockUpdates: (Remove | SetAttributes)[] = controlBlocks(
+    dataSet,
+  ).map((ctrlBlock) => ({
+    element: ctrlBlock,
+    attributes: { datSet: null, confRev: updatedConfRev(ctrlBlock) },
+  }));
 
   return dataSetRemove.concat(extRefEdits, ctrlBlockUpdates);
 }

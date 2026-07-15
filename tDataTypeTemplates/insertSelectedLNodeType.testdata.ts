@@ -354,18 +354,17 @@ export const atccSelection = {
   },
 };
 
-
 export const invalidSelection = {
-  "Mod": {
-    "Oper": {
-      "ctlVal": {
-        "on": {},
-        "blocked": {},
-        "test": {},
-        "test/blocked": {}
+  Mod: {
+    Oper: {
+      ctlVal: {
+        on: {},
+        blocked: {},
+        test: {},
+        "test/blocked": {},
       },
-      "origin": {
-        "orCat": {
+      origin: {
+        orCat: {
           "not-supported": {},
           "bay-control": {},
           "station-control": {},
@@ -373,177 +372,177 @@ export const invalidSelection = {
           "automatic-bay": {},
           "automatic-station": {},
           "automatic-remote": {},
-          "maintenance": {},
-          "process": {}
+          maintenance: {},
+          process: {},
         },
-        "orIdent": {}
+        orIdent: {},
       },
-      "ctlNum": {},
-      "T": {},
-      "Test": {},
-      "Check": {}
+      ctlNum: {},
+      T: {},
+      Test: {},
+      Check: {},
     },
-    "stVal": {
-      "on": {},
-      "blocked": {},
-      "test": {},
-      "test/blocked": {}
-    },
-    "q": {},
-    "t": {},
-    "ctlModel": {
-      "status-only": {},
-      "direct-with-normal-security": {}
-    }
-  },
-  "Beh": {
-    "stVal": {
-      "on": {},
-      "blocked": {},
-      "test": {},
+    stVal: {
+      on: {},
+      blocked: {},
+      test: {},
       "test/blocked": {},
-      "off": {}
     },
-    "q": {},
-    "t": {}
-  },
-  "Health": {
-    "stVal": {
-      "Waiting": {},
-      "Test": {},
-      "Ok": {},
-      "Warning": {},
-      "Alarm": {}
+    q: {},
+    t: {},
+    ctlModel: {
+      "status-only": {},
+      "direct-with-normal-security": {},
     },
-    "q": {},
-    "t": {}
   },
-  "NamPlt": {
-    "vendor": {},
-    "swRev": {},
-    "d": {},
-    "configRev": {},
-    "paramRev": {},
-    "valRev": {},
-    "ldNs": {}
-  }
+  Beh: {
+    stVal: {
+      on: {},
+      blocked: {},
+      test: {},
+      "test/blocked": {},
+      off: {},
+    },
+    q: {},
+    t: {},
+  },
+  Health: {
+    stVal: {
+      Waiting: {},
+      Test: {},
+      Ok: {},
+      Warning: {},
+      Alarm: {},
+    },
+    q: {},
+    t: {},
+  },
+  NamPlt: {
+    vendor: {},
+    swRev: {},
+    d: {},
+    configRev: {},
+    paramRev: {},
+    valRev: {},
+    ldNs: {},
+  },
 };
 
 export const ptocSelection = {
-  "Beh": {
-    "q": {},
-    "stVal": {
-      "blocked": {},
-      "off": {},
-      "on": {},
-      "test": {},
-      "test/blocked": {}
+  Beh: {
+    q: {},
+    stVal: {
+      blocked: {},
+      off: {},
+      on: {},
+      test: {},
+      "test/blocked": {},
     },
-    "t": {}
+    t: {},
   },
-  "Op": {
-    "general": {},
-    "q": {},
-    "t": {}
+  Op: {
+    general: {},
+    q: {},
+    t: {},
   },
-  "Str": {
-    "dirGeneral": {
-      "backward": {},
-      "both": {},
-      "forward": {},
-      "unknown": {}
+  Str: {
+    dirGeneral: {
+      backward: {},
+      both: {},
+      forward: {},
+      unknown: {},
     },
-    "general": {},
-    "q": {},
-    "t": {}
+    general: {},
+    q: {},
+    t: {},
   },
-  "TmAChr": {
-    "crvPts": {
-      "xVal": {},
-      "yVal": {}
+  TmAChr: {
+    crvPts: {
+      xVal: {},
+      yVal: {},
     },
-    "maxPts": {},
-    "numPts": {},
-    "xD": {},
-    "yD": {},
-    "yUnits": {
-      "SIUnit": {
+    maxPts: {},
+    numPts: {},
+    xD: {},
+    yD: {},
+    yUnits: {
+      SIUnit: {
         "°C": {},
-        "1/s": {}
-      }
+        "1/s": {},
+      },
     },
-    "xUnits": {
-      "SIUnit": {
+    xUnits: {
+      SIUnit: {
         "°C": {},
-        "1/s": {}
-      }
-    }
-  }
-}
+        "1/s": {},
+      },
+    },
+  },
+};
 
 export const mhaiSelection = {
-  "Beh": {
-    "q": {},
-    "stVal": {
-      "blocked": {},
-      "off": {},
-      "on": {},
-      "test": {},
-      "test/blocked": {}
+  Beh: {
+    q: {},
+    stVal: {
+      blocked: {},
+      off: {},
+      on: {},
+      test: {},
+      "test/blocked": {},
     },
-    "t": {}
+    t: {},
   },
-  "HA": {
-    "evalTm": {},
-    "frequency": {},
-    "maxPts": {},
-    "numCyc": {},
-    "numHar": {},
-    "phsAHar": {
-      "cVal": {
-        "mag": {
-          "f": {}
+  HA: {
+    evalTm: {},
+    frequency: {},
+    maxPts: {},
+    numCyc: {},
+    numHar: {},
+    phsAHar: {
+      cVal: {
+        mag: {
+          f: {},
         },
-        "ang": {
-          "f": {}
-        }
+        ang: {
+          f: {},
+        },
       },
-      "q": {},
-      "t": {}
-    }
-  }
-}
+      q: {},
+      t: {},
+    },
+  },
+};
 
 export const lln0Selection = {
-  "Beh": {
-    "q": {},
-    "stVal": {
-      "blocked": {},
-      "off": {},
-      "on": {},
-      "test": {},
-      "test/blocked": {}
+  Beh: {
+    q: {},
+    stVal: {
+      blocked: {},
+      off: {},
+      on: {},
+      test: {},
+      "test/blocked": {},
     },
-    "t": {}
+    t: {},
   },
-  "TestDo": {
-    "stVal": {},
-    "q": {},
-    "t": {},
-    "dataNs": {}
+  TestDo: {
+    stVal: {},
+    q: {},
+    t: {},
+    dataNs: {},
   },
-}
+};
 
 export const ptrcSelection = {
-  "Beh": {
-    "q": {},
-    "stVal": {
-      "blocked": {},
-      "off": {},
-      "on": {},
-      "test": {},
-      "test/blocked": {}
+  Beh: {
+    q: {},
+    stVal: {
+      blocked: {},
+      off: {},
+      on: {},
+      test: {},
+      "test/blocked": {},
     },
-    "t": {}
+    t: {},
   },
-}
+};

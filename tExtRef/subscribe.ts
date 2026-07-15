@@ -157,7 +157,9 @@ function createSubscribeEdit(
   return { parent, node: extRef, reference };
 }
 
-function createSubscribeEdits(connections: Connection[]): (Insert | SetAttributes)[] {
+function createSubscribeEdits(
+  connections: Connection[],
+): (Insert | SetAttributes)[] {
   const inputEdits: Insert[] = [];
 
   const extRefEdits = connections
@@ -272,10 +274,10 @@ export function subscribe(
   const validConnections = options.force
     ? connections
     : (connections.filter((conn) =>
-      validSubscribeConditions(conn, {
-        checkOnlyBType: options.checkOnlyBType,
-      }),
-    ) as Connection[]);
+        validSubscribeConditions(conn, {
+          checkOnlyBType: options.checkOnlyBType,
+        }),
+      ) as Connection[]);
 
   const extRefEdits = createSubscribeEdits(validConnections);
 
