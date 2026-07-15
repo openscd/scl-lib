@@ -126,7 +126,7 @@ describe("Function to an importIED and its referenced elements", () => {
     ).querySelector("SCL")!;
 
     // try to import the same IED twice
-    for (let count = 2; count--;) {
+    for (let count = 2; count--; ) {
       const multipleIEDs = (
         await fetch("tIED/insertIED/multipleieds.scd")
           .then((response) => response.text())

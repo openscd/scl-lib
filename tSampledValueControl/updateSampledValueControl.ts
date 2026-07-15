@@ -37,15 +37,18 @@ export function updateSampledValueControl(
         ':root > IED > AccessPoint > Server > LDevice > LN[lnClass="LSVS"] > DOI[name="SvCBRef"] > DAI[name="setSrcRef"] > Val',
       ),
     )
-      .filter((val) => val.textContent === controlBlockObjRef(setAttributes.element))
+      .filter(
+        (val) => val.textContent === controlBlockObjRef(setAttributes.element),
+      )
       .flatMap((val) => {
         const [path] = controlBlockObjRef(setAttributes.element)!.split(".");
         const oldValContent = Array.from(val.childNodes).find(
           (node) => node.nodeType === Node.TEXT_NODE,
         )!;
-        const newValContent = setAttributes.element.ownerDocument.createTextNode(
-          `${path}.${setAttributes.attributes!.name}`,
-        ) as Text;
+        const newValContent =
+          setAttributes.element.ownerDocument.createTextNode(
+            `${path}.${setAttributes.attributes!.name}`,
+          ) as Text;
 
         return [
           { node: oldValContent },

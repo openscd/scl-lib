@@ -10,7 +10,7 @@ import {
   mmxuSelection,
   ptocSelection,
   lln0Selection,
-  ptrcSelection
+  ptrcSelection,
 } from "./insertSelectedLNodeType.testdata.js";
 
 import {
@@ -21,8 +21,12 @@ import {
 } from "./insertSelectedDataType.testfiles.js";
 
 import { insertSelectedLNodeType } from "./insertSelectedLNodeType.js";
-import { CdcChildren, DaDescription, LNodeDescription, nsdToJson } from "./nsdToJson.js";
-
+import {
+  CdcChildren,
+  DaDescription,
+  LNodeDescription,
+  nsdToJson,
+} from "./nsdToJson.js";
 
 function cyrb64(str: string): string {
   /* eslint-disable no-bitwise */
@@ -47,24 +51,24 @@ function cyrb64(str: string): string {
   /* eslint-enable no-bitwise */
 }
 
-
 const incompleteMmxu = findElement(missingMmxuTypes) as XMLDocument;
 const imcompleteLtrk = findElement(incompleteLtrkTypes) as XMLDocument;
 const incompleteAtcc = findElement(incompleteAtccTypes) as XMLDocument;
 const missingDataTypes = findElement(emptySSD) as XMLDocument;
 
 describe("insertLNodeTypeSelection", () => {
-  it('is insensitive for invalid EnumTypes', () => {
+  it("is insensitive for invalid EnumTypes", () => {
     const data = nsdToJson("LLN0") as LNodeDescription;
-    insertSelectedLNodeType(incompleteMmxu, invalidSelection, { class: "LLN0", data });
-  })
+    insertSelectedLNodeType(incompleteMmxu, invalidSelection, {
+      class: "LLN0",
+      data,
+    });
+  });
 
   it("insert MMXU LNodeType including missing sub data", () => {
-    const edits = insertSelectedLNodeType(
-      incompleteMmxu,
-      mmxuSelection,
-      { class: "MMXU" },
-    );
+    const edits = insertSelectedLNodeType(incompleteMmxu, mmxuSelection, {
+      class: "MMXU",
+    });
 
     expect(edits.length).to.equal(6);
 
@@ -108,11 +112,10 @@ describe("insertLNodeTypeSelection", () => {
 
   it("insert LTRK LNodeType including missing sub data", () => {
     const data = nsdToJson("LTRK") as LNodeDescription;
-    const edits = insertSelectedLNodeType(
-      imcompleteLtrk,
-      ltrkSelection,
-      { class: "LTRK", data },
-    );
+    const edits = insertSelectedLNodeType(imcompleteLtrk, ltrkSelection, {
+      class: "LTRK",
+      data,
+    });
 
     expect(edits.length).to.equal(7);
 
@@ -164,11 +167,10 @@ describe("insertLNodeTypeSelection", () => {
 
   it("insert ATCC LNodeType including missing sub data", () => {
     const data = nsdToJson("ATCC") as LNodeDescription;
-    const edits = insertSelectedLNodeType(
-      incompleteAtcc,
-      atccSelection,
-      { class: "ATCC", data },
-    );
+    const edits = insertSelectedLNodeType(incompleteAtcc, atccSelection, {
+      class: "ATCC",
+      data,
+    });
 
     expect(edits.length).to.equal(5);
 
@@ -207,11 +209,11 @@ describe("insertLNodeTypeSelection", () => {
 
   it("insert DataTypeTemplates when missing", () => {
     const data = nsdToJson("ATCC") as LNodeDescription;
-    const edits = insertSelectedLNodeType(
-      missingDataTypes,
-      atccSelection,
-      { class: "ATCC", desc: 'SomeDesc', data },
-    );
+    const edits = insertSelectedLNodeType(missingDataTypes, atccSelection, {
+      class: "ATCC",
+      desc: "SomeDesc",
+      data,
+    });
 
     expect(edits.length).to.equal(19);
 
@@ -221,59 +223,76 @@ describe("insertLNodeTypeSelection", () => {
 
   it("add count attribute to data attribute in case is an array", () => {
     const data = nsdToJson("PTOC") as LNodeDescription;
-    const edits = insertSelectedLNodeType(
-      missingDataTypes,
-      ptocSelection,
-      { class: "PTOC", data },
-    );
+    const edits = insertSelectedLNodeType(missingDataTypes, ptocSelection, {
+      class: "PTOC",
+      data,
+    });
 
     const doTypeEdit = edits[5].node as Element;
-    expect(doTypeEdit.querySelector('DA[name="crvPts"]')?.getAttribute('count')).to.equal("maxPts");
+    expect(
+      doTypeEdit.querySelector('DA[name="crvPts"]')?.getAttribute("count"),
+    ).to.equal("maxPts");
   });
 
   it("add count attribute to sub data object in case is an array", () => {
     const data = nsdToJson("MHAI") as LNodeDescription;
-    const edits = insertSelectedLNodeType(
-      missingDataTypes,
-      mhaiSelection,
-      { class: "MHAI", data },
-    );
+    const edits = insertSelectedLNodeType(missingDataTypes, mhaiSelection, {
+      class: "MHAI",
+      data,
+    });
 
     const doTypeEdit = edits[4].node as Element;
-    expect(doTypeEdit.querySelector('SDO[name="phsAHar"]')?.getAttribute('count')).to.equal("maxPts");
+    expect(
+      doTypeEdit.querySelector('SDO[name="phsAHar"]')?.getAttribute("count"),
+    ).to.equal("maxPts");
   });
 
-  it('add user defined data object', () => {
+  it("add user defined data object", () => {
     const lnData = nsdToJson("LLN0") as LNodeDescription;
     const userData = nsdToJson("SPS") as CdcChildren;
     (userData["dataNs"] as DaDescription).mandatory = true;
     (userData["dataNs"] as DaDescription).val = "TestNameSpace-1-d-1234567890";
 
     const cdcDescription = {
-      tagName: 'DataObject',
-      type: 'SPS',
-      descID: '',
-      presCond: 'O',
+      tagName: "DataObject",
+      type: "SPS",
+      descID: "",
+      presCond: "O",
       children: userData,
     };
 
     Object.assign(lnData, {
-      ['TestDo']: cdcDescription,
+      ["TestDo"]: cdcDescription,
     });
 
-    const edits = insertSelectedLNodeType(missingDataTypes, lln0Selection, { class: "LLN0", data: lnData });
+    const edits = insertSelectedLNodeType(missingDataTypes, lln0Selection, {
+      class: "LLN0",
+      data: lnData,
+    });
 
     expect(edits.length).to.equal(5);
-    expect((edits[3].node as Element).querySelector('DA[name="dataNs"] > Val')?.textContent).to.equal("TestNameSpace-1-d-1234567890");
+    expect(
+      (edits[3].node as Element).querySelector('DA[name="dataNs"] > Val')
+        ?.textContent,
+    ).to.equal("TestNameSpace-1-d-1234567890");
   });
 
-  it('set user defined LNodeType.id', () => {
+  it("set user defined LNodeType.id", () => {
     const id = cyrb64("TestFile");
-    const edits = insertSelectedLNodeType(missingDataTypes, ptrcSelection, { class: "PTRC", id });
+    const edits = insertSelectedLNodeType(missingDataTypes, ptrcSelection, {
+      class: "PTRC",
+      id,
+    });
 
     expect(edits.length).to.equal(4);
-    expect((edits[1].node as Element).getAttribute("id")).to.equal("96ba6481aba181d8");
-    expect((edits[2].node as Element).getAttribute("id")).to.equal("Beh$oscd$_c6ed035c8137b35a");
-    expect((edits[3].node as Element).getAttribute("id")).to.equal("stVal$oscd$_48ba16345b8e7f5b");
-  })
+    expect((edits[1].node as Element).getAttribute("id")).to.equal(
+      "96ba6481aba181d8",
+    );
+    expect((edits[2].node as Element).getAttribute("id")).to.equal(
+      "Beh$oscd$_c6ed035c8137b35a",
+    );
+    expect((edits[3].node as Element).getAttribute("id")).to.equal(
+      "stVal$oscd$_48ba16345b8e7f5b",
+    );
+  });
 });

@@ -5,7 +5,6 @@ import { isInsert } from "@openscd/oscd-api/utils.js";
 
 import { createGSE } from "./createGSE.js";
 
-
 const parent = new DOMParser()
   .parseFromString(
     `<SCL>

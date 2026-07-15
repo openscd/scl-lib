@@ -45,7 +45,8 @@ function uniqueSupervisions(
     let source: ExtRefSource;
     let sinkIED: Element | null = null;
 
-    const isExtRefUpdate = isSetAttributes(edit) && edit.element.tagName === "ExtRef";
+    const isExtRefUpdate =
+      isSetAttributes(edit) && edit.element.tagName === "ExtRef";
     const newExtRefInsert =
       isInsert(edit) && (edit.node as Element).tagName === "ExtRef";
 

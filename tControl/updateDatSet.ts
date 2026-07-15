@@ -2,11 +2,13 @@ import { SetAttributes } from "@openscd/oscd-api";
 
 const controlBlockTags = ["ReportControl", "GSEControl", "SampledValueControl"];
 
-/** 
+/**
  * On update the `datSet` attribute of a given control block this function will change
  * `DataSet.name` attribute as well if the `DataSet` is only used by this control block.
  */
-export function updateDatSet(setAttributes: SetAttributes): SetAttributes | null {
+export function updateDatSet(
+  setAttributes: SetAttributes,
+): SetAttributes | null {
   const newDatSet = setAttributes?.attributes?.datSet;
   const controlBlock = setAttributes.element;
   const oldDatSet = controlBlock.getAttribute("datSet");

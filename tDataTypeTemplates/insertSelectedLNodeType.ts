@@ -34,7 +34,12 @@ function data(lnData: any, path: string[]): any {
 export function insertSelectedLNodeType(
   doc: XMLDocument,
   selection: TreeSelection,
-  logicalnode: { class: string, desc?: string, id?: string, data?: LNodeDescription },
+  logicalnode: {
+    class: string;
+    desc?: string;
+    id?: string;
+    data?: LNodeDescription;
+  },
 ): Insert[] {
   const types = new Set<string>();
   const elements: Templates = {
@@ -46,7 +51,7 @@ export function insertSelectedLNodeType(
 
   const lnData = logicalnode.data ?? nsdToJson(logicalnode.class);
   const lnClass = logicalnode.class;
-  const desc = logicalnode.desc ?? null
+  const desc = logicalnode.desc ?? null;
 
   function isUnknownId(id: string): boolean {
     const alreadyCreate = types.has(id);
@@ -226,14 +231,12 @@ export function insertSelectedLNodeType(
         if (dep.typeKind === "BASIC" || !dep.typeKind) {
           da.setAttribute("bType", dep.type!);
 
-
           // One can include a value for any data attribute
           if (dep.val) {
             const value = createElement(doc, "Val", {});
             value.textContent = dep.val;
             (da as Node).insertBefore(value, null);
           }
-
         }
 
         if (dep.typeKind === "ENUMERATED") {

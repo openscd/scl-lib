@@ -6,7 +6,9 @@ import { updatedConfRev } from "../tControl/updateConfRev.js";
 /** Updates `ReportControl` attributes and cross-referenced elements
  * @param setAttributes - setAttributes edit on `ReportControl` attributes
  * @returns Completed update edit array */
-export function updateReportControl(setAttributes: SetAttributes): SetAttributes[] {
+export function updateReportControl(
+  setAttributes: SetAttributes,
+): SetAttributes[] {
   if (setAttributes.element.tagName !== "ReportControl") return [];
 
   const reportControl = setAttributes.element;

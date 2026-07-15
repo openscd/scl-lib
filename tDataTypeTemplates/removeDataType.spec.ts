@@ -24,7 +24,9 @@ describe("Function to recursively remove data types ", () => {
     expect(removes.length).equals(6);
     expect(removes[0].node).equal(doType);
 
-    removes.forEach(remove => expect(remove.node.parentElement).to.not.be.null);
+    removes.forEach(
+      (remove) => expect(remove.node.parentElement).to.not.be.null,
+    );
   });
 
   it("does not remove linked data types with force option set", () => {
@@ -33,6 +35,8 @@ describe("Function to recursively remove data types ", () => {
     expect(removes.length).equals(15);
     expect(removes[0].node).equal(lNodeType);
 
-    removes.forEach(remove => expect(remove.node.parentElement).to.not.be.null);
+    removes.forEach(
+      (remove) => expect(remove.node.parentElement).to.not.be.null,
+    );
   });
 });
