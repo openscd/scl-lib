@@ -1,5 +1,11 @@
 # scl-lib
 
+[![npm version](https://img.shields.io/npm/v/@openscd/scl-lib.svg)](https://www.npmjs.com/package/@openscd/scl-lib)
+[![Test](https://github.com/openscd/scl-lib/actions/workflows/test-branch.yml/badge.svg)](https://github.com/openscd/scl-lib/actions/workflows/test-branch.yml)
+[![Release](https://github.com/openscd/scl-lib/actions/workflows/release.yml/badge.svg)](https://github.com/openscd/scl-lib/actions/workflows/release.yml)
+[![Released with release-please](https://img.shields.io/badge/released%20with-release--please-blue.svg)](https://github.com/googleapis/release-please)
+[![License](https://img.shields.io/npm/l/@openscd/scl-lib.svg)](https://github.com/openscd/scl-lib/blob/main/LICENSE)
+
 This repository - SclLib - is a collection of TypeScript functions, that allow to faster develop modules for SCL editing.
 
 ## Content
