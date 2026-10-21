@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.2](https://github.com/openscd/scl-lib/compare/scl-lib-v2.0.1...scl-lib-v2.0.2) (2026-10-21)
+
+
+### Bug Fixes
+
+* **tIED:** scope LNode deduplication to immediate parent container ([#159](https://github.com/openscd/scl-lib/issues/159)) ([d8dc0cb](https://github.com/openscd/scl-lib/commit/d8dc0cb0a755e10bf4aad380e1bee2266e2fc81a)), closes [#158](https://github.com/openscd/scl-lib/issues/158)
+
 ## [2.0.1](https://github.com/openscd/scl-lib/compare/scl-lib-v2.0.0...scl-lib-v2.0.1) (2026-09-27)
 
 
